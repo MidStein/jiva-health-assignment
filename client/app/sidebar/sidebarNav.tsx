@@ -21,7 +21,7 @@ export function SidebarNav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="p-4 border-b-1 border-gray-300">
+    <div className="p-4 border-y-1 border-gray-300">
       <ul>
         <li className="mb-1">
           <NavLink
@@ -30,7 +30,7 @@ export function SidebarNav() {
               isActive && "bg-green-300 text-green-700"
             }`}
           >
-          <LayoutDashboard /> <span>Dashboard</span>
+            <LayoutDashboard /> <span>Dashboard</span>
           </NavLink>
         </li>
         <li className="mb-1">
@@ -40,7 +40,7 @@ export function SidebarNav() {
               isActive && "bg-green-300 text-green-700"
             }`}
           >
-          <Building2 /> <span>Organization</span>
+            <Building2 /> <span>Organization</span>
           </NavLink>
         </li>
         <li className="mb-1">
@@ -65,34 +65,108 @@ export function SidebarNav() {
           </button>
           {open && (
             <ul className="ms-4">
-              <li className="rounded p-1 mt-1 mb-1">Service 1</li>
-              <li className="rounded px-1">Service 2</li>
+              <li className="rounded p-1 mt-1 mb-1">
+                <NavLink
+                  to="services/service1"
+                  className={({ isActive }) => `flex gap-2 rounded p-1 ${
+                    isActive && "bg-green-300 text-green-700"
+                  }`}
+                >
+                  <Briefcase /> <span>Service 1</span>
+                </NavLink>
+              </li>
+              <li className="rounded px-1">
+                <NavLink
+                  to="services/service2"
+                  className={({ isActive }) => `flex gap-2 rounded p-1 ${
+                    isActive && "bg-green-300 text-green-700"
+                  }`}
+                >
+                  <Briefcase /> <span>Service 2</span>
+                </NavLink>
+              </li>
             </ul>
           )}
         </li>
         <li className="flex gap-2 rounded p-1 mb-1">
-          <Stethoscope /> <span>Consultation</span>
+          <NavLink
+            to="/consultation"
+            className={({ isActive }) => `flex gap-2 rounded p-1 ${
+              isActive && "bg-green-300 text-green-700"
+            }`}
+          >
+            <Stethoscope /> <span>Consultation</span>
+          </NavLink>
         </li>
         <li className="flex gap-2 rounded p-1 mb-1">
-          <FlaskConical /> <span>Lab test Booking</span>
+          <NavLink
+            to="/lab-test-booking"
+            className={({ isActive }) => `flex gap-2 rounded p-1 ${
+              isActive && "bg-green-300 text-green-700"
+            }`}
+          >
+            <FlaskConical /> <span>Lab test Booking</span>
+          </NavLink>
         </li>
         <li className="flex gap-2 rounded p-1 mb-1">
-          <Pill /> <span>Medicine Orders</span>
+          <NavLink
+            to="/medicine-orders"
+            className={({ isActive }) => `flex gap-2 rounded p-1 ${
+              isActive && "bg-green-300 text-green-700"
+            }`}
+          >
+            <Pill /> <span>Medicine Orders</span>
+          </NavLink>
         </li>
         <li className="flex gap-2 rounded p-1 mb-1">
-          <Ambulance /> <span>Ambulance booking</span>
+          <NavLink
+            to="/ambulance-booking"
+            className={({ isActive }) => `flex gap-2 rounded p-1 ${
+              isActive && "bg-green-300 text-green-700"
+            }`}
+          >
+            <Ambulance /> <span>Ambulance booking</span>
+          </NavLink>
         </li>
         <li className="flex gap-2 rounded p-1 mb-1">
-          <Handshake /> <span>Vendor &amp; Partners</span>
+          <NavLink
+            to="/vendor-and-partners"
+            className={({ isActive }) => `flex gap-2 rounded p-1 ${
+              isActive && "bg-green-300 text-green-700"
+            }`}
+          >
+            <Handshake /> <span>Vendor &amp; Partners</span>
+          </NavLink>
         </li>
         <li className="flex gap-2 rounded p-1 mb-1">
-          <FileText /> <span>Report</span>
+          <NavLink
+            to="/report"
+            className={({ isActive }) => `flex gap-2 rounded p-1 ${
+              isActive && "bg-green-300 text-green-700"
+            }`}
+          >
+            <FileText /> <span>Report</span>
+          </NavLink>
         </li>
         <li className="flex gap-2 rounded p-1 mb-1">
-          <ShieldCheck /> <span>User Access</span>
+          <NavLink
+            to="/user-access"
+            className={({ isActive }) => `flex gap-2 rounded p-1 ${
+              isActive && "bg-green-300 text-green-700"
+            }`}
+          >
+            <ShieldCheck /> <span>User Access</span>
+          </NavLink>
         </li>
         <li className="flex gap-2 rounded p-1 mb-1">
-          <Settings /> <span>Setting</span>
+          <NavLink
+            to="/setting"
+            className={({ isActive }) => `flex gap-2 rounded p-1 ${
+              isActive && "bg-green-300 text-green-700"
+            }`}
+          >
+            <Settings /> <span>Setting</span>
+          </NavLink>
         </li>
       </ul>
     </div>

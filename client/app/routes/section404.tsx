@@ -16,7 +16,11 @@ export default function section404() {
         project.
       </div>
       <div>
-        Go back to <NavLink to="/user-management">User Management</NavLink>.
+        Go back to{" "}
+        <NavLink to="/user-management" className="text-blue-500 underline">
+          User Management
+        </NavLink>
+        .
       </div>
     </div>
   );
