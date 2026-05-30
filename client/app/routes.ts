@@ -1,12 +1,13 @@
 import { type RouteConfig, index, route } from "@react-router/dev/routes";
 
 export default [
-  index("routes/index.tsx"),
   route("", "routes/layout.tsx", [
+    index("routes/userMgmt.tsx"),
+
     route("dashboard", "routes/section404.tsx", { id: "dashboard" }),
     route("organization", "routes/section404.tsx", { id: "organization" }),
 
-    route("user-management", "routes/userManagement.tsx"),
+    route("user-management", "routes/userMgmt.tsx", { id: "userManagement" }),
 
     route("services/service1", "routes/section404.tsx", { id: "service1" }),
     route("services/service2", "routes/section404.tsx", { id: "service2" }),
