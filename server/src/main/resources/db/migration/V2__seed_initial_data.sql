@@ -1,4 +1,5 @@
-INSERT INTO users (name,
+INSERT INTO users (id,
+  name,
   role,
   status,
   joined_date,
@@ -7,8 +8,25 @@ INSERT INTO users (name,
   email,
   phone_code,
   phone_number) VALUES
-  ('Alice Williams', 'PATIENT', 'ACTIVE', '2025-01-15', '2026-03-23', 12, "alice.williams@email.com", 1, 5551111111),
-  ('Brian Moore', 'DOCTOR', 'ACTIVE', '2023-08-10', '2026-03-20', 45, "brian.moore@clinicmail.com", 1, 5552222222),
-  ('Cecilia Smith', 'PATIENT', 'INACTIVE', '2024-05-22', '2025-12-30', 5, "cecilia.smith@email.com", 1, 5553333333),
-  ('David Kim', 'NURSE', 'ACTIVE', '2022-11-03', '2026-03-22', 30, "david.kim@hospital.org", 1, 5554444444),
-  ('Eva Lopez', 'PATIENT', 'ACTIVE', '2025-07-18', '2026-03-21', 8, "eva.lopez@email.com", 1, 5555555555)
+  (1, 'Alice Williams', 'PATIENT', 'ACTIVE', '2025-01-15', '2026-03-23', 12, 'alice.williams@email.com', 1, 5551111111),
+  (2, 'Brian Moore', 'DOCTOR', 'ACTIVE', '2023-08-10', '2026-03-20', 45, 'brian.moore@clinicmail.com', 1, 5552222222),
+  (3, 'Cecilia Smith', 'PATIENT', 'INACTIVE', '2024-05-22', '2025-12-30', 5, 'cecilia.smith@email.com', 1, 5553333333),
+  (4, 'David Kim', 'NURSE', 'ACTIVE', '2022-11-03', '2026-03-22', 30, 'david.kim@hospital.org', 1, 5554444444),
+  (5, 'Eva Lopez', 'PATIENT', 'ACTIVE', '2025-07-18', '2026-03-21', 8, 'eva.lopez@email.com', 1, 5555555555);
+
+Insert Into family_members (user_id,
+  name,
+  relation,
+  phone_code,
+  phone_number,
+  dob) Values
+  (1, 'Emily Williams', 'Daughter', 1, 5551111113, '2001-07-14'),
+  (1, 'Sarah Williams', 'Spouse', 1, 5551111114, '1978-11-22'),
+  (3, 'Priya Smith', 'Spouse', 91, 9876500011, '1958-06-10'),
+  (3, 'Arjun Smith', 'Son', 91, 9876500012, '2012-12-05'),
+  (3, 'Ananya Smith', 'Daughter', 91, 9876500013, '2015-04-21'),
+  (4, 'Robert Kim', 'Father', 1, 5554444401, '1958-01-16'),
+  (4, 'Linda Kim', 'Mother', 1, 5554444402, '1960-08-09'),
+  (5, 'David Lopez', 'Brother', 34, 612345671, '1992-05-12'),
+  (5, 'Maria Lopez', 'Sister', 34, 612345672, '1995-10-27'),
+  (5, 'Garmen Lopez', 'Mother', 34, 612345673, '1967-03-03');
