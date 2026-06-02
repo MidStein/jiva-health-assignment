@@ -3,12 +3,12 @@ import { SidebarClose, SidebarOpen } from "lucide-react";
 import { HeaderSearch } from "./headerSearch";
 import { HeaderButtonGroup } from "./headerButtonGroup";
 
-type Props = {
+type HeaderProps = {
   sidebarOpen: boolean;
   toggleSidebar: () => void;
 };
 
-export function Header({ sidebarOpen, toggleSidebar }: Props) {
+export function Header({ sidebarOpen, toggleSidebar }: HeaderProps) {
   return (
     <div className="flex justify-between items-center px-5 border-b-1 border-gray-300 h-16">
       {sidebarOpen

@@ -17,11 +17,11 @@ import {
   Users,
 } from "lucide-react";
 
-type Props = {
+type SidebarNavProps = {
   sidebarOpen: boolean;
 };
 
-export function SidebarNav({ sidebarOpen }: Props) {
+export function SidebarNav({ sidebarOpen }: SidebarNavProps) {
   const [open, setOpen] = useState(false);
   const location = useLocation();
 

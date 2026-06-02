@@ -2,11 +2,11 @@ import { SidebarHeader } from "./sidebarHeader";
 import { SidebarNav } from "./sidebarNav";
 import { SidebarFooter } from "./sidebarFooter";
 
-type Props = {
+type SidebarProps = {
   sidebarOpen: boolean;
 };
 
-export function Sidebar({ sidebarOpen }: Props) {
+export function Sidebar({ sidebarOpen }: SidebarProps) {
   return (
     <div
       className={`h-screen flex-shrink-0 flex flex-col border-r-1 border-gray-300 transition-all duration-300 truncate

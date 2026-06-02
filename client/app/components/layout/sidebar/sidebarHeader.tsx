@@ -1,8 +1,8 @@
-type Props = {
+type SidebarHeader = {
   sidebarOpen: boolean;
 };
 
-export function SidebarHeader({ sidebarOpen }: Props) {
+export function SidebarHeader({ sidebarOpen }: SidebarHeader) {
   return (
     <div className="border-b-1 border-gray-300 h-16 flex items-center">
       <img

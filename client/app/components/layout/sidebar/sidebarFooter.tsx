@@ -1,8 +1,8 @@
-type Props = {
+type SidebarFooterProps = {
   sidebarOpen: boolean;
 };
 
-export function SidebarFooter({ sidebarOpen }: Props) {
+export function SidebarFooter({ sidebarOpen }: SidebarFooterProps) {
   return (
     <div className="p-4 border-t-1 border-gray-300 mt-auto">
       <div className="flex gap-2 items-center">
