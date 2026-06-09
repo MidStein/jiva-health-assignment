@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import jiva.user_mgmt.service.UserService;
+
 @SpringBootTest
 @ActiveProfiles("test")
 public class UserServiceTest {

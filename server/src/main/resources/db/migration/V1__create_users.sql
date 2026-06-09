@@ -7,9 +7,25 @@ Create Table users (
   last_active Date Not Null,
   appointments_count Int Not Null Default 0,
   is_prime Boolean Not Null Default False,
-  email Text Not Null,
-  phone_code Int Not Null,
-  phone_number Text Not Null
+  email Text,
+  phone_number Text,
+  gender Text Not Null Check (gender In ('MALE', 'FEMALE', 'NON_BINARY', 'PREFER_NOT_TO_SAY')),
+  dob Date Not Null,
+  blood_group Text Check (blood_group In (
+    'A_POSITIVE',
+    'A_NEGATIVE',
+    'B_POSITIVE',
+    'B_NEGATIVE',
+    'AB_POSITIVE',
+    'AB_NEGATIVE',
+    'O_POSITIVE',
+    'O_NEGATIVE'
+  )),
+  address Text,
+  postal_code Text,
+  city Text,
+  state Text,
+  country Text
 );
 
 Create Table family_members (
@@ -17,7 +33,6 @@ Create Table family_members (
   user_id Bigint Not Null,
   name Text Not Null,
   relation Text Not Null,
-  phone_code Int Not Null,
   phone_number Text Not Null,
   dob Date Not Null,
 

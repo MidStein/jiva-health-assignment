@@ -1,4 +1,4 @@
-package jiva.user_mgmt;
+package jiva.user_mgmt.entity;
 
 import java.time.LocalDate;
 
@@ -13,6 +13,11 @@ import jakarta.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
+
+import jiva.user_mgmt.enums.Role;
+import jiva.user_mgmt.enums.Status;
+import jiva.user_mgmt.enums.Gender;
+import jiva.user_mgmt.enums.BloodGroup;
 
 @Getter
 @Setter
@@ -36,19 +41,18 @@ public class User {
   @Column(name = "is_prime")
   private boolean isPrime;
   private String email;
-  @Column(name = "phone_code")
-  private int phoneCode;
   @Column(name = "phone_number")
   private String phoneNumber;
-}
-
-enum Role {
-  DOCTOR,
-  NURSE,
-  PATIENT
-}
-
-enum Status {
-  ACTIVE,
-  INACTIVE
+  @Enumerated(EnumType.STRING)
+  private Gender gender;
+  private LocalDate dob;
+  @Column(name = "blood_group")
+  @Enumerated(EnumType.STRING)
+  private BloodGroup bloodGroup;
+  private String address;
+  @Column(name = "postal_code")
+  private String postalCode;
+  private String city;
+  private String state;
+  private String country;
 }

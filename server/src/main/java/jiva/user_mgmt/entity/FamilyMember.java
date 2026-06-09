@@ -1,4 +1,4 @@
-package jiva.user_mgmt;
+package jiva.user_mgmt.entity;
 
 import java.time.LocalDate;
 
@@ -29,8 +29,6 @@ public class FamilyMember {
 
   private String name;
   private String relation;
-  @Column(name = "phone_code")
-  private int phoneCode;
   @Column(name = "phone_number")
   private String phoneNumber;
   private LocalDate dob;
