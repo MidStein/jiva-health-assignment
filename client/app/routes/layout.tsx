@@ -9,7 +9,10 @@ export default function Layout() {
     <div className="flex">
       <Sidebar sidebarOpen={sidebarOpen} />
       <div className="flex-1">
-        <Header sidebarOpen={sidebarOpen} toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
+        <Header
+          sidebarOpen={sidebarOpen}
+          toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
+        />
         <Outlet />
       </div>
     </div>

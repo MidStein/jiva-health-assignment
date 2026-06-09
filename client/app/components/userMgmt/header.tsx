@@ -1,3 +1,16 @@
+import { Button } from "../ui/button";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "../ui/dialog";
+import AddUserForm from "./addUserForm";
+
 export default function UserManagementHeader() {
   return (
     <div className="flex justify-between items-center mb-5">
@@ -7,13 +20,36 @@ export default function UserManagementHeader() {
           Manage user accounts and permissions
         </div>
       </div>
-      <button
-        className="text-white bg-gray-700 pl-3 py-1 pr-4 rounded-xl flex gap-2 items-center"
-        type="button"
-      >
-        <span className="text-xl">+</span>
-        <span>Add User</span>
-      </button>
+
+      <Dialog>
+          <DialogTrigger asChild>
+            <button
+              className="text-white bg-gray-700 pl-3 py-1 pr-4 rounded-xl flex gap-2 items-center"
+              type="button"
+            >
+              <span className="text-xl">+</span>
+              <span>Add User</span>
+            </button>
+          </DialogTrigger>
+
+          <DialogContent className="sm:max-w-lg p-6">
+            <DialogHeader>
+              <DialogTitle>Add New User</DialogTitle>
+              <DialogDescription>
+                Create a new user account with role and permissions
+              </DialogDescription>
+            </DialogHeader>
+
+            <AddUserForm />
+
+            <DialogFooter className="bg-white border-none pt-0">
+              <DialogClose asChild>
+                <Button type="button" variant="outline">Cancel</Button>
+              </DialogClose>
+              <Button type="submit" form="addUserForm">Add User</Button>
+            </DialogFooter>
+          </DialogContent>
+      </Dialog>
     </div>
   );
 }

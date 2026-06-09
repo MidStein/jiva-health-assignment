@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useLoaderData } from "react-router";
 
 import type { Route } from "./+types/userMgmt";
@@ -21,7 +22,7 @@ export async function loader(): Promise<{
 }> {
   const [usersResp, totalFamilyMembersResp] = await Promise.all([
     fetch(`${API_BASE_URL}/users`),
-    fetch(`${API_BASE_URL}/totalFamilyMembers`),
+    fetch(`${API_BASE_URL}/familyMembers/total`),
   ]);
 
   const [users, totalFamilyMembers] = await Promise.all([
@@ -34,13 +35,28 @@ export async function loader(): Promise<{
 
 export default function UserManagement() {
   const { users, totalFamilyMembers } = useLoaderData<typeof loader>();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [genderAgeFilter, setGenderAgeFilter] = useState("allStatus");
+  const [activeStatus, setActiveStatus] = useState("allStatus");
 
   return (
-    <div className="bg-gray-50 h-[calc(100vh-4rem)] p-5">
+    <div className="bg-gray-50 h-[calc(100vh-4rem)] p-5 overflow-auto">
       <UserManagementHeader />
-      <MetricsGrid users={users} totalFamilyMembers={totalFamilyMembers}/>
-      <FilterBar />
-      <UserList />
+      <MetricsGrid users={users} totalFamilyMembers={totalFamilyMembers} />
+      <FilterBar
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        genderAgeFilter={genderAgeFilter}
+        setGenderAgeFilter={setGenderAgeFilter}
+        activeStatus={activeStatus}
+        setActiveStatus={setActiveStatus}
+      />
+      <UserList
+        users={users}
+        searchQuery={searchQuery}
+        genderAgeFilter={genderAgeFilter}
+        activeStatus={activeStatus}
+      />
     </div>
   );
 }

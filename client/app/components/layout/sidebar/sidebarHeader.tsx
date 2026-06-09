@@ -9,8 +9,8 @@ export function SidebarHeader({ sidebarOpen }: SidebarHeader) {
         className="mx-auto"
         src="/logo.png"
         alt="Logo"
-        height={sidebarOpen ? "75": "50"}
-        width={sidebarOpen ? "75": "50"}
+        height={sidebarOpen ? "75" : "50"}
+        width={sidebarOpen ? "75" : "50"}
       />
     </div>
   );
