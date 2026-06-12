@@ -1,7 +1,6 @@
 package jiva.user_mgmt.service;
 
 import java.util.List;
-import java.time.LocalDate;
 
 import org.springframework.stereotype.Service;
 
@@ -21,8 +20,6 @@ public class UserService {
   }
 
   public User create(User user) {
-    user.setJoinedDate(LocalDate.now());
-    user.setLastActive(LocalDate.now());
     return repo.save(user);
   }
 }

@@ -10,8 +10,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import jiva.user_mgmt.enums.Role;
@@ -19,6 +20,8 @@ import jiva.user_mgmt.enums.Status;
 import jiva.user_mgmt.enums.Gender;
 import jiva.user_mgmt.enums.BloodGroup;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -26,7 +29,7 @@ import jiva.user_mgmt.enums.BloodGroup;
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id;
+  private Long id;
   private String name;
   @Enumerated(EnumType.STRING)
   private Role role;

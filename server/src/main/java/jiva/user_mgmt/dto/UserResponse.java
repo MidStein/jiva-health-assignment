@@ -6,7 +6,7 @@ import jiva.user_mgmt.enums.Role;
 import jiva.user_mgmt.enums.Status;
 import jiva.user_mgmt.enums.Gender;
 
-public record UserDto(
+public record UserResponse(
     Long id,
     String name,
     Role role,

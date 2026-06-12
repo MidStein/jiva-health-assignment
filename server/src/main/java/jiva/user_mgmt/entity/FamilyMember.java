@@ -21,7 +21,7 @@ import lombok.Setter;
 public class FamilyMember {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id;
+  private Long id;
 
   @ManyToOne
   @JoinColumn(name = "user_id")
