@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -12,6 +14,8 @@ import {
 import AddUserForm from "./addUserForm";
 
 export default function UserManagementHeader() {
+  const [showForm, setShowForm] = useState(false);
+
   return (
     <div className="flex justify-between items-center mb-5">
       <div>
@@ -21,7 +25,7 @@ export default function UserManagementHeader() {
         </div>
       </div>
 
-      <Dialog>
+      <Dialog open={showForm} onOpenChange={setShowForm} >
           <DialogTrigger asChild>
             <button
               className="text-white bg-gray-700 pl-3 py-1 pr-4 rounded-xl flex gap-2 items-center"
@@ -40,7 +44,7 @@ export default function UserManagementHeader() {
               </DialogDescription>
             </DialogHeader>
 
-            <AddUserForm />
+            <AddUserForm closeForm={() => { setShowForm(false) }}/>
 
             <DialogFooter className="bg-white border-none pt-0">
               <DialogClose asChild>

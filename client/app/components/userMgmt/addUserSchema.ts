@@ -1,7 +1,15 @@
 import * as z from "zod";
 
+function trimToNull(str: string): string | null {
+  if (!str) {
+    return null;
+  }
+  const trimmed = str.trim();
+  return trimmed === "" ? null : trimmed;
+}
+
 export default z.object({
-  name: z.string(),
+  name: z.string().trim().min(1, "Name required"),
   email: z.string().email("Invalid email address"),
   phoneNumber: z
     .string()
@@ -15,12 +23,16 @@ export default z.object({
     )
     .refine((value) => value.startsWith("+"), {
       message: "Country code must start with +",
-    }).or(z.literal(""))
+    })
+    .refine((value) => !(/[^+\d]/.test(value)), {
+      message: "Cannot contain any characters except digits and + symbol"
+    })
+    .or(z.literal(""))
     .optional(),
   dob: z.string().optional(),
   gender: z
     .enum(["MALE", "FEMALE", "NON_BINARY", "PREFER_NOT_TO_SAY"])
-    .or(z.literal(""))
+    .nullable()
     .optional(),
   bloodGroup: z
     .enum([
@@ -33,11 +45,11 @@ export default z.object({
       "O_POSITIVE",
       "O_NEGATIVE",
     ])
-    .or(z.literal(""))
+    .nullable()
     .optional(),
-  address: z.string().optional(),
-  postalCode: z.string().optional(),
-  city: z.string().optional(),
-  state: z.string().optional(),
-  country: z.string().optional(),
+  address: z.string().transform(trimToNull).nullable().optional(),
+  postalCode: z.string().transform(trimToNull).nullable().optional(),
+  city: z.string().transform(trimToNull).nullable().optional(),
+  state: z.string().transform(trimToNull).nullable().optional(),
+  country: z.string().transform(trimToNull).nullable().optional(),
 });

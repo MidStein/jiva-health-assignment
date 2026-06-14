@@ -53,13 +53,13 @@ export default function UserList({
     .filter(
       (user) =>
         activeStatus === "allStatus" ||
-        user.status.toLowerCase() === activeStatus,
+        user.status === activeStatus,
     )
     .filter((user) => {
       if (genderAgeFilter === "allStatus") return true;
 
-      if (genderAgeFilter === "male" || genderAgeFilter === "female") {
-        return user.gender.toLowerCase() === genderAgeFilter;
+      if (genderAgeFilter === "MALE" || genderAgeFilter === "FEMALE") {
+        return user.gender === genderAgeFilter;
       }
 
       const age = getAge(user.dob);

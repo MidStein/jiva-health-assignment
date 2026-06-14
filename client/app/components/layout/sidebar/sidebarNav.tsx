@@ -33,7 +33,7 @@ export function SidebarNav({ sidebarOpen }: SidebarNavProps) {
             to="/dashboard"
             className={({ isActive }) =>
               `flex gap-2 rounded p-1 ${
-                isActive && "bg-green-300 text-green-700"
+                isActive && "bg-green-200 text-green-800"
               } ${sidebarOpen || "justify-center"}`
             }
           >
