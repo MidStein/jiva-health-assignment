@@ -1,7 +1,7 @@
-import type { User } from "~/lib/types";
+import type { UserType } from "./User";
 
 type MetricsGridProps = {
-  users: User[];
+  users: UserType[];
   totalFamilyMembers: number;
 };
 

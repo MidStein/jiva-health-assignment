@@ -24,12 +24,21 @@ export default z.object({
     .refine((value) => value.startsWith("+"), {
       message: "Country code must start with +",
     })
-    .refine((value) => !(/[^+\d]/.test(value)), {
-      message: "Cannot contain any characters except digits and + symbol"
+    .refine((value) => !/[^+\d]/.test(value), {
+      message: "Cannot contain any characters except digits and + symbol",
     })
     .or(z.literal(""))
+    .transform((val) => (val === "" ? null : val))
+    .nullable()
     .optional(),
-  dob: z.string().optional(),
+  dob: z
+    .string()
+    .date()
+    .refine((date) => date <= new Date().toISOString().split("T")[0], {
+      message: "Date of birth cannot be in the future",
+    })
+    .nullable()
+    .optional(),
   gender: z
     .enum(["MALE", "FEMALE", "NON_BINARY", "PREFER_NOT_TO_SAY"])
     .nullable()

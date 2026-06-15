@@ -10,7 +10,7 @@ type HeaderProps = {
 
 export function Header({ sidebarOpen, toggleSidebar }: HeaderProps) {
   return (
-    <div className="flex justify-between items-center px-5 border-b-1 border-gray-300 h-16">
+    <header className="flex justify-between items-center px-5 border-b-1 border-gray-300 h-16">
       {sidebarOpen ? (
         <div
           onClick={toggleSidebar}
@@ -28,6 +28,6 @@ export function Header({ sidebarOpen, toggleSidebar }: HeaderProps) {
       )}
       <HeaderSearch />
       <HeaderButtonGroup />
-    </div>
+    </header>
   );
 }

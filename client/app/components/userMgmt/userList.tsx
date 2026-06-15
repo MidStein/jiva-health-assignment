@@ -2,11 +2,11 @@ import Fuse from "fuse.js";
 
 import UserCard from "./userCard";
 
-import type { User } from "~/lib/types";
+import type { UserType } from "./User";
 import { useMemo } from "react";
 
 interface UserListProps {
-  users: User[];
+  users: UserType[];
   searchQuery: string;
   genderAgeFilter: string;
   activeStatus: string;
@@ -62,12 +62,16 @@ export default function UserList({
         return user.gender === genderAgeFilter;
       }
 
-      const age = getAge(user.dob);
+      if (user.dob) {
+        const age = getAge(user.dob);
 
-      if (genderAgeFilter === "13-17") return age >= 13 && age <= 17;
-      if (genderAgeFilter === "18-35") return age >= 18 && age <= 35;
-      if (genderAgeFilter === "36-59") return age >= 36 && age <= 59;
-      if (genderAgeFilter === "60+") return age >= 60;
+        if (genderAgeFilter === "13-17") return age >= 13 && age <= 17;
+        if (genderAgeFilter === "18-35") return age >= 18 && age <= 35;
+        if (genderAgeFilter === "36-59") return age >= 36 && age <= 59;
+        if (genderAgeFilter === "60+") return age >= 60;
+      }
+
+      return false;
     })
     .map((user) => <UserCard user={user} key={user.id} />);
 }

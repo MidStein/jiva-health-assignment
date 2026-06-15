@@ -29,7 +29,7 @@ export default function AddUserForm({ closeForm }: AddUserFormProps) {
       name: "",
       email: "",
       phoneNumber: "",
-      dob: "",
+      dob: null,
       gender: null,
       bloodGroup: null,
       address: "",
@@ -146,6 +146,7 @@ export default function AddUserForm({ closeForm }: AddUserFormProps) {
                     aria-invalid={fieldState.invalid}
                     name={field.name}
                     type="date"
+                    value={field.value ?? ""}
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />

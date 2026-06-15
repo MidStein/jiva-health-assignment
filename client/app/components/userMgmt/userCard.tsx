@@ -2,10 +2,10 @@ import { Calendar, Crown, Edit, Eye, Mail, Phone } from "lucide-react";
 
 import { Badge } from "~/components/ui/badge";
 import { Button } from "../ui/button";
-import type { User } from "~/lib/types";
+import type { UserType } from "./User";
 
 interface UserCardProps {
-  user: User;
+  user: UserType;
 }
 
 // one letter initial for one word name
@@ -17,12 +17,13 @@ function getInitials(name: string) {
       return firstLetter.concat(name.charAt(i + 1)).toUpperCase();
     }
   }
+  return firstLetter.toUpperCase();
 }
 
 function createDisplayPhoneNum(phoneNumber: string) {
   // The country code could be 1-3 digits long
   // The subscriber number will be the last 10 digits, from which the -10 comes
-  return `+${phoneNumber.slice(0, -10)} (${phoneNumber.slice(-10, -7)}) ${phoneNumber.slice(-7, -4)}-${phoneNumber.slice(-4)}`;
+  return `${phoneNumber.slice(0, -10)} (${phoneNumber.slice(-10, -7)}) ${phoneNumber.slice(-7, -4)}-${phoneNumber.slice(-4)}`;
 }
 
 export default function UserCard({ user }: UserCardProps) {
@@ -40,7 +41,13 @@ export default function UserCard({ user }: UserCardProps) {
               <Badge variant="secondary">
                 {user.role.charAt(0) + user.role.slice(1).toLowerCase()}
               </Badge>
-              <Badge className="bg-green-200 text-green-800">
+              <Badge
+                className={
+                  user.status === "ACTIVE"
+                    ? "bg-green-200 text-green-800"
+                    : "bg-yellow-100 text-yellow-700"
+                }
+              >
                 {user.status.charAt(0) + user.status.slice(1).toLowerCase()}
               </Badge>
             </div>
