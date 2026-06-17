@@ -45,12 +45,17 @@ export default function FilterBar({
       <div className="relative w-1/5">
         <Filter className="absolute h-6 w-6 top-2 left-3 text-gray-400" />
         <Select value={genderAgeFilter} onValueChange={setGenderAgeFilter}>
-          <SelectTrigger className="bg-white pl-10 py-5 w-full text-lg" aria-label="Gender and age filter">
+          <SelectTrigger
+            className="bg-white pl-10 py-5 w-full text-lg"
+            aria-label="Gender and age filter"
+          >
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="allStatus">All Status</SelectItem>
+              <SelectItem value="allGendersAges">
+                All Genders &amp; Ages
+              </SelectItem>
               <SelectItem value="MALE">Male</SelectItem>
               <SelectItem value="FEMALE">Female</SelectItem>
               <SelectItem value="13-17">13-17 years</SelectItem>
@@ -65,7 +70,10 @@ export default function FilterBar({
       <div className="relative w-1/5">
         <Filter className="absolute h-6 w-6 top-2 left-3 text-gray-400" />
         <Select value={activeStatus} onValueChange={setActiveStatus}>
-          <SelectTrigger className="bg-white pl-10 py-5 w-full text-lg" aria-label="Active status filter">
+          <SelectTrigger
+            className="bg-white pl-10 py-5 w-full text-lg"
+            aria-label="Active status filter"
+          >
             <SelectValue />
           </SelectTrigger>
           <SelectContent>

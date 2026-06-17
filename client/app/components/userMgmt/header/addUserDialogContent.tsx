@@ -4,8 +4,23 @@ import * as z from "zod";
 import { toast } from "sonner";
 import { useRevalidator } from "react-router";
 
-import { Field, FieldError, FieldGroup, FieldLabel } from "../ui/field";
-import { Input } from "../ui/input";
+import { Alert, AlertDescription } from "~/components/ui/alert";
+import { Button } from "../../ui/button";
+import {
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "~/components/ui/dialog";
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "~/components/ui/field";
+import { Input } from "~/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -13,16 +28,17 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select";
+} from "~/components/ui/select";
 import addUserSchema from "./addUserSchema";
 import { API_BASE_URL } from "~/lib/api";
-import { Alert, AlertDescription } from "../ui/alert";
 
-interface AddUserFormProps {
+interface AddUserDialogContentProps {
   closeForm: () => void;
-};
+}
 
-export default function AddUserForm({ closeForm }: AddUserFormProps) {
+export default function AddUserDialogContent({
+  closeForm,
+}: AddUserDialogContentProps) {
   const form = useForm<z.input<typeof addUserSchema>>({
     resolver: zodResolver(addUserSchema),
     defaultValues: {
@@ -36,7 +52,7 @@ export default function AddUserForm({ closeForm }: AddUserFormProps) {
       postalCode: "",
       city: "",
       state: "",
-      country: ""
+      country: "",
     },
   });
   const revalidator = useRevalidator();
@@ -46,31 +62,42 @@ export default function AddUserForm({ closeForm }: AddUserFormProps) {
       const postResp = await fetch(`${API_BASE_URL}/users`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
       });
       if (postResp.ok) {
-        toast("User created. User list updated.")
+        toast("User created. User list updated.");
         closeForm();
         revalidator.revalidate();
       } else {
         form.setError("root", {
           type: "server",
-          message: "Server error. Failed to create user."
-        })
+          message: "Server error. Failed to create user.",
+        });
       }
-    } catch(err) {
+    } catch (err) {
       form.setError("root", {
         type: "server",
-        message: "Network failure. Unable to reach the server."
-      })
+        message: "Network failure. Unable to reach the server.",
+      });
     }
   }
 
   return (
-    <div>
-      <form className="mb-4" id="addUserForm" onSubmit={form.handleSubmit(onUserFormSubmit)}>
+    <DialogContent className="sm:max-w-lg p-6">
+      <DialogHeader>
+        <DialogTitle>Add New User</DialogTitle>
+        <DialogDescription>
+          Create a new user account with role and permissions
+        </DialogDescription>
+      </DialogHeader>
+
+      <form
+        className="mb-4"
+        id="addUserForm"
+        onSubmit={form.handleSubmit(onUserFormSubmit)}
+      >
         <FieldGroup>
           <div className="flex gap-4">
             <Controller
@@ -126,7 +153,8 @@ export default function AddUserForm({ closeForm }: AddUserFormProps) {
                     id={field.name}
                     aria-invalid={fieldState.invalid}
                     name={field.name}
-                    placeholder="+91 98765 43210"
+                    placeholder="+919876543210"
+                    value={field.value ?? ""}
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -163,7 +191,11 @@ export default function AddUserForm({ closeForm }: AddUserFormProps) {
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel htmlFor={field.name}>Gender</FieldLabel>
-                  <Select name={field.name} value={field.value ?? ""} onValueChange={field.onChange}>
+                  <Select
+                    name={field.name}
+                    value={field.value ?? ""}
+                    onValueChange={field.onChange}
+                  >
                     <SelectTrigger
                       aria-invalid={fieldState.invalid}
                       id={field.name}
@@ -194,7 +226,11 @@ export default function AddUserForm({ closeForm }: AddUserFormProps) {
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel htmlFor={field.name}>Blood Group</FieldLabel>
-                  <Select name={field.name} value={field.value ?? ""} onValueChange={field.onChange}>
+                  <Select
+                    name={field.name}
+                    value={field.value ?? ""}
+                    onValueChange={field.onChange}
+                  >
                     <SelectTrigger
                       aria-invalid={fieldState.invalid}
                       id={field.name}
@@ -236,7 +272,9 @@ export default function AddUserForm({ closeForm }: AddUserFormProps) {
                   placeholder="House/Flat No., Building Name, Street"
                   value={field.value ?? ""}
                 />
-                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
               </Field>
             )}
           />
@@ -337,6 +375,21 @@ export default function AddUserForm({ closeForm }: AddUserFormProps) {
           </AlertDescription>
         </Alert>
       )}
-    </div>
+
+      <DialogFooter className="bg-white border-none pt-0">
+        <DialogClose asChild>
+          <Button type="button" variant="outline">
+            Cancel
+          </Button>
+        </DialogClose>
+        <Button
+          type="submit"
+          form="addUserForm"
+          disabled={form.formState.isSubmitting}
+        >
+          Add User
+        </Button>
+      </DialogFooter>
+    </DialogContent>
   );
 }

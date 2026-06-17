@@ -18,13 +18,13 @@ export default function metricsGrid({
       <div className="bg-white rounded-xl border-1 border-gray-300 p-3 pb-5 flex-1">
         <div className="text-gray-500 mb-2">Prime User</div>
         <div className="text-2xl text-green-500">
-          {users.filter((u) => u.prime).length}
+          {users.filter((u) => u.isPrime).length}
         </div>
       </div>
       <div className="bg-white rounded-xl border-1 border-gray-300 p-3 pb-5 flex-1">
         <div className="text-gray-500 mb-2">Non-Prime User</div>
         <div className="text-2xl text-green-800">
-          {users.filter((u) => !u.prime).length}
+          {users.filter((u) => !u.isPrime).length}
         </div>
       </div>
       <div className="bg-white rounded-xl border-1 border-gray-300 p-3 pb-5 flex-1">

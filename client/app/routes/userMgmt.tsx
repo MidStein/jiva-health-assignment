@@ -3,14 +3,14 @@ import { useLoaderData } from "react-router";
 import * as z from "zod";
 
 import type { Route } from "./+types/userMgmt";
-import UserManagementHeader from "~/components/userMgmt/header";
+import UserManagementHeader from "~/components/userMgmt/header/header";
 import MetricsGrid from "~/components/userMgmt/metricsGrid";
 import FilterBar from "~/components/userMgmt/filterBar";
 import UserList from "~/components/userMgmt/userList";
 import { API_BASE_URL } from "~/lib/api";
 import UserSchema, { type UserType } from "~/components/userMgmt/User";
 
-export function meta({ }: Route.MetaArgs) {
+export function meta({}: Route.MetaArgs) {
   return [
     { title: "User Management | Jiva Health" },
     { name: "description", content: "User Management section" },
@@ -26,8 +26,13 @@ export async function loader(): Promise<{
     fetch(`${API_BASE_URL}/familyMembers/total`),
   ]);
 
-  if (!totalFamilyMembersResp.ok || !usersResp.ok) {
-    throw new Response("Server error. Failed to load User Management data");
+  if (!usersResp.ok || !totalFamilyMembersResp.ok) {
+    console.error(
+      "Server did not return ok response for /users or /familyMembersTotal",
+    );
+    throw new Response("Server error. Failed to load User Management data", {
+      status: Math.max(usersResp.status, totalFamilyMembersResp.status),
+    });
   }
 
   const [usersJson, totalFamilyMembersJson] = await Promise.all([
@@ -35,16 +40,32 @@ export async function loader(): Promise<{
     totalFamilyMembersResp.json(),
   ]);
 
-  const users = z.array(UserSchema).parse(usersJson);
-  const totalFamilyMembers = z.number().parse(totalFamilyMembersJson);
+  const users = usersJson
+    .map((user: any) => UserSchema.safeParse(user))
+    .filter(
+      (res: z.SafeParseReturnType<UserType, z.output<typeof UserSchema>>) => {
+        if (!res.success) console.error(res.error);
+        return res.success;
+      },
+    )
+    .map(
+      (res: z.SafeParseReturnType<UserType, z.output<typeof UserSchema>>) =>
+        res.data,
+    );
 
-  return { users, totalFamilyMembers };
+  const totalFamilyMembers = z.number().safeParse(totalFamilyMembersJson);
+  if (!totalFamilyMembers.success) {
+    console.error("Server did not return totalFamilyMembers as a number");
+    throw new Error("Server error. Failed to load User Management data");
+  }
+
+  return { users, totalFamilyMembers: totalFamilyMembers.data };
 }
 
 export default function UserManagement() {
   const { users, totalFamilyMembers } = useLoaderData<typeof loader>();
   const [searchQuery, setSearchQuery] = useState("");
-  const [genderAgeFilter, setGenderAgeFilter] = useState("allStatus");
+  const [genderAgeFilter, setGenderAgeFilter] = useState("allGendersAges");
   const [activeStatus, setActiveStatus] = useState("allStatus");
 
   return (

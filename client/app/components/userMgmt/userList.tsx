@@ -51,12 +51,10 @@ export default function UserList({
 
   return fuzzedUsers
     .filter(
-      (user) =>
-        activeStatus === "allStatus" ||
-        user.status === activeStatus,
+      (user) => activeStatus === "allStatus" || user.status === activeStatus,
     )
     .filter((user) => {
-      if (genderAgeFilter === "allStatus") return true;
+      if (genderAgeFilter === "allGendersAges") return true;
 
       if (genderAgeFilter === "MALE" || genderAgeFilter === "FEMALE") {
         return user.gender === genderAgeFilter;

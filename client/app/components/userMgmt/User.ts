@@ -8,24 +8,27 @@ const UserSchema = z.object({
   joinedDate: z
     .string()
     .date()
-    .refine((date) => date <= new Date().toISOString().split("T")[0])
+    .refine((dateStr) => new Date(dateStr) <= new Date())
     .transform((dateString) => new Date(dateString)),
   lastActive: z
     .string()
     .date()
-    .refine((date) => date <= new Date().toISOString().split("T")[0])
+    .refine((dateStr) => new Date(dateStr) <= new Date())
     .transform((dateString) => new Date(dateString)),
   appointmentsCount: z.number(),
-  prime: z.boolean(),
+  isPrime: z.boolean(),
   email: z.string().email(),
-  phoneNumber: z.string().regex(/^\+\d{11,13}/).nullable(),
+  phoneNumber: z
+    .string()
+    .regex(/^\+\d{11,13}$/)
+    .nullable(),
   gender: z
     .enum(["MALE", "FEMALE", "NON_BINARY", "PREFER_NOT_TO_SAY"])
     .nullable(),
   dob: z
     .string()
     .date()
-    .refine((date) => date <= new Date().toISOString().split("T")[0])
+    .refine((dateStr) => new Date(dateStr) <= new Date())
     .transform((dateString) => new Date(dateString))
     .nullable(),
 });

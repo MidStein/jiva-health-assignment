@@ -84,10 +84,10 @@ export default function UserCard({ user }: UserCardProps) {
             <div className="text-gray-500">Joined</div>
           </div>
 
-          <div>{user.joinedDate.toString()}</div>
+          <div>{user.joinedDate.toISOString().split("T")[0]}</div>
 
           <div className="text-sm text-gray-500">
-            Last: {user.lastActive.toString()}
+            Last: {user.lastActive.toISOString().split("T")[0]}
           </div>
         </div>
       </div>

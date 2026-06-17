@@ -13,19 +13,9 @@ export default z.object({
   email: z.string().email("Invalid email address"),
   phoneNumber: z
     .string()
-    .min(
-      12,
-      "Country code must be 1-3 digits and subscriber number must be 10 digits",
-    )
-    .max(
-      14,
-      "Country code must be 1-3 digits and subscriber number must be 10 digits",
-    )
-    .refine((value) => value.startsWith("+"), {
-      message: "Country code must start with +",
-    })
-    .refine((value) => !/[^+\d]/.test(value), {
-      message: "Cannot contain any characters except digits and + symbol",
+    .regex(/^\+\d{11,13}$/, {
+      message:
+        "Start with +. Country code: 1-3 digits. Subscriber no. 10 digits. No characters other than digits and +",
     })
     .or(z.literal(""))
     .transform((val) => (val === "" ? null : val))
@@ -34,9 +24,11 @@ export default z.object({
   dob: z
     .string()
     .date()
-    .refine((date) => date <= new Date().toISOString().split("T")[0], {
+    .refine((dateStr) => new Date(dateStr) <= new Date(), {
       message: "Date of birth cannot be in the future",
     })
+    .or(z.literal(""))
+    .transform((val) => (val === "" ? null : val))
     .nullable()
     .optional(),
   gender: z
