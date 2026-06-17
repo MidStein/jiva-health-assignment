@@ -8,7 +8,7 @@ import jiva.user_mgmt.entity.FamilyMember;
 
 @Service
 public class FamilyMemberService {
-  private FamilyMemberRepository repo;
+  private final FamilyMemberRepository repo;
 
   public FamilyMemberService(FamilyMemberRepository familyMemberRepository) {
     this.repo = familyMemberRepository;

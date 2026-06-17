@@ -15,7 +15,7 @@ public record UserRequest(
     @Email
     @NotBlank
     String email,
-    @Pattern(regexp = "^\\+\\d{11,13}")
+    @Pattern(regexp = "^\\+\\d{11,13}$")
     String phoneNumber,
     @PastOrPresent
     LocalDate dob,

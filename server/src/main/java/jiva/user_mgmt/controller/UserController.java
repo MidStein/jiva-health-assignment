@@ -1,12 +1,13 @@
 package jiva.user_mgmt.controller;
 
+import java.net.URI;
 import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import jakarta.validation.Valid;
 import jiva.user_mgmt.service.UserService;
@@ -15,22 +16,21 @@ import jiva.user_mgmt.enums.Role;
 import jiva.user_mgmt.enums.Status;
 import jiva.user_mgmt.dto.UserRequest;
 import jiva.user_mgmt.dto.UserResponse;
+import jiva.user_mgmt.dto.UserSummaryResponse;
 
 @RestController
-@CrossOrigin(origins = "*")
-class UserController {
-  @Autowired
-  private UserService svc;
+public class UserController {
+  private final UserService svc;
 
   public UserController(UserService userService) {
     this.svc = userService;
   }
 
   @GetMapping("/api/users")
-  public List<UserResponse> get() {
+  public List<UserSummaryResponse> getAllSummary() {
     return svc.getAll()
     .stream()
-    .map((user) -> new UserResponse(
+    .map((user) -> new UserSummaryResponse(
       user.getId(),
       user.getName(),
       user.getRole(),
@@ -47,15 +47,40 @@ class UserController {
     .toList();
   }
 
+  @GetMapping("/api/users/{id}")
+  public UserResponse getUser(@PathVariable Long id) {
+    User user =  svc.getUser(id);
+    return new UserResponse(
+      user.getId(),
+      user.getName(),
+      user.getRole(),
+      user.getStatus(),
+      user.getJoinedDate(),
+      user.getLastActive(),
+      user.getAppointmentsCount(),
+      user.isPrime(),
+      user.getEmail(),
+      user.getPhoneNumber(),
+      user.getGender(),
+      user.getDob(),
+      user.getBloodGroup(),
+      user.getAddress(),
+      user.getPostalCode(),
+      user.getCity(),
+      user.getState(),
+      user.getCountry()
+    );
+  }
+
   @PostMapping("/api/users")
-  public ResponseEntity<?> create(@Valid @RequestBody UserRequest userRequest) {
+  public ResponseEntity<Void> create(@Valid @RequestBody UserRequest userRequest) {
     User createdUser = svc.create(new User(
       null,
       userRequest.name().trim(),
       Role.PATIENT,
       Status.ACTIVE,
-      LocalDate.now(),
-      LocalDate.now(),
+      LocalDate.now(ZoneOffset.UTC),
+      LocalDate.now(ZoneOffset.UTC),
       0,
       false,
       userRequest.email(),
@@ -70,8 +95,12 @@ class UserController {
       trimToNull(userRequest.country())
     ));
 
-    return ResponseEntity.status(HttpStatus.CREATED)
-      .body(createdUser);
+    URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+      .path("/{id}")
+      .buildAndExpand(createdUser.getId())
+      .toUri();
+
+    return ResponseEntity.created(location).build();
   }
 
   private String trimToNull(String str) {

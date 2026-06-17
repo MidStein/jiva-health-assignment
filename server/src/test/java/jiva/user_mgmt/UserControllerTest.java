@@ -8,6 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.hamcrest.Matchers.matchesPattern;
 
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
@@ -17,17 +19,18 @@ public class UserControllerTest {
   private MockMvc mockMvc;
 
   @Test
-  public void shouldCreateUser() throws Exception {
+  public void shouldReturnLocation() throws Exception {
     String requestBody = """
         {
           "name": "Deepak",
-          "email": "deepak@gmail.com",
-          "phoneNumber": "+19014816328"
+          "email": "deepak@gmail.com"
         }
         """;
 
     mockMvc.perform(post("/api/users")
         .contentType(MediaType.APPLICATION_JSON)
-        .content(requestBody));
+        .content(requestBody))
+      .andExpect(header().exists("Location"))
+      .andExpect(header().string("Location", matchesPattern(".*/api/users/\\d+")));
   }
 }

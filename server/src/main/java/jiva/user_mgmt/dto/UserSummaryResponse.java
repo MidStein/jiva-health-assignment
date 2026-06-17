@@ -4,10 +4,9 @@ import java.time.LocalDate;
 
 import jiva.user_mgmt.enums.Role;
 import jiva.user_mgmt.enums.Status;
-import jiva.user_mgmt.enums.BloodGroup;
 import jiva.user_mgmt.enums.Gender;
 
-public record UserResponse(
+public record UserSummaryResponse(
     Long id,
     String name,
     Role role,
@@ -19,11 +18,5 @@ public record UserResponse(
     String email,
     String phoneNumber,
     Gender gender,
-    LocalDate dob,
-    BloodGroup bloodGroup,
-    String address,
-    String postalCode,
-    String city,
-    String state,
-    String country) {
+    LocalDate dob) {
 }
